@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/movie-mate-reactjs/static/css/main.38bc1f37.css",
-    "main.js": "/movie-mate-reactjs/static/js/main.c4e7d512.js",
+    "main.js": "/movie-mate-reactjs/static/js/main.3c08df39.js",
     "static/js/453.ccd9147b.chunk.js": "/movie-mate-reactjs/static/js/453.ccd9147b.chunk.js",
     "static/media/UpComingMovie14.jpg": "/movie-mate-reactjs/static/media/UpComingMovie14.2dc174eeee38f459749d.jpg",
     "static/media/signUp.jpg": "/movie-mate-reactjs/static/media/signUp.7f28f13785cf5d9f0990.jpg",
@@ -82,11 +82,11 @@
     "static/media/userWhiteIcon.svg": "/movie-mate-reactjs/static/media/userWhiteIcon.7e62985caac38acff28bb9c6bebdb321.svg",
     "static/media/userYellowIcon.svg": "/movie-mate-reactjs/static/media/userYellowIcon.9cf71339e359cd635c1e4ddcd02f568b.svg",
     "main.38bc1f37.css.map": "/movie-mate-reactjs/static/css/main.38bc1f37.css.map",
-    "main.c4e7d512.js.map": "/movie-mate-reactjs/static/js/main.c4e7d512.js.map",
+    "main.3c08df39.js.map": "/movie-mate-reactjs/static/js/main.3c08df39.js.map",
     "453.ccd9147b.chunk.js.map": "/movie-mate-reactjs/static/js/453.ccd9147b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.38bc1f37.css",
-    "static/js/main.c4e7d512.js"
+    "static/js/main.3c08df39.js"
   ]
 }
