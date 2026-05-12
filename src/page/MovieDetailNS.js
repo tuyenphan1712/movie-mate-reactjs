@@ -5,15 +5,17 @@ import { Invoice } from "../components/Invoice";
 import { MovieSchedule } from "../components/MovieSchedule";
 import { MovieInfo } from "../components/MovieInfo";
 import { ROUTING_WATCHTRAILER_NS } from "../router";
-import images from "../asset";
-import {useLocation} from "react-router-dom";
-import {useGetMovieById} from "../api/movie/useGetMovieById";
+import { useLocation } from "react-router-dom";
+import { useMovies } from "../context/MovieContext";
 
 const MovieDetailNS = () => {
-
   const { state } = useLocation();
+  const { movies } = useMovies();
   const movieId = state?.movieId;
-  const poster = state?.poster; // Nhận đường dẫn ảnh từ state
+
+  const movieDetails =
+    (movies.nowShowing || []).find((movie) => String(movie.id) === String(movieId)) ||
+    (movies.nowShowing || [])[0];
 
   const daysOfWeek = [
     "Chủ Nhật",
@@ -31,21 +33,13 @@ const MovieDetailNS = () => {
     const month = date.getMonth() + 1;
     return `${day} ${dayOfMonth}/${month}`;
   };
-// Sử dụng hook để lấy thông tin chi tiết phim
-  const { data: movieDetails, isFetching, error } = useGetMovieById(movieId);
+
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedCombos, setSelectedCombos] = useState({});
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState("MovieMate Nguyễn Du");
   const [selectedTime, setSelectedTime] = useState("14:00");
   const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
-
-
-
-// Xử lý trạng thái đang tải
-  if (isFetching) {
-    return <div className="text-white text-center">Đang tải dữ liệu...</div>;
-  }
 
   const handleScheduleSelect = (schedule) => {
     setSelectedSchedule(schedule);
@@ -66,31 +60,27 @@ const MovieDetailNS = () => {
   return (
     <div className="bg-[#151515] text-white min-h-screen">
       <div className="container mx-auto px-4 py-10 ">
-        {/* Poster và Thông Tin Phim */}
         <MovieInfo
-            movie={movieDetails?.name || "Tên phim"}
-            poster={poster}
-            genres={movieDetails?.genres || []}
-            rating={movieDetails?.classify || "N/A"}
-            duration={movieDetails?.duration || "N/A"}
-            description={movieDetails?.description || "Mô tả phim không có sẵn"}
-            producer="Hà Khả Nguyên"
-            director={movieDetails?.director || "Không rõ"}
-            cast={movieDetails?.actor || []}
-            onWatchTrailerClick={handleWatchTrailerClick}
+          movie={movieDetails?.name || movieDetails?.title || "Tên phim"}
+          poster={state?.poster || movieDetails?.poster}
+          genres={movieDetails?.genres || []}
+          rating={movieDetails?.classify || "N/A"}
+          duration={movieDetails?.duration || movieDetails?.time || "N/A"}
+          description={movieDetails?.description || "Mô tả phim không có sẵn"}
+          producer="MovieMate"
+          director={movieDetails?.director || "Không rõ"}
+          cast={movieDetails?.actor || "Đang cập nhật"}
+          onWatchTrailerClick={handleWatchTrailerClick}
         />
 
-        {/* Lịch chiếu */}
         <div className="mt-10 w-11/12 m-auto">
           <MovieSchedule onScheduleSelect={handleScheduleSelect} />
         </div>
 
-        {/* Sơ Đồ Ghế */}
         <div className="mt-10 w-11/12 m-auto ">
           <SeatMap onSeatSelect={handleSeatSelection} />
         </div>
 
-        {/* Combo và hoá đơn */}
         <div className="mt-10 w-11/12 m-auto grid grid-cols-3 gap-6">
           <div className="col-span-2">
             <ComboSelection onComboSelect={handleComboSelection} />
@@ -100,7 +90,7 @@ const MovieDetailNS = () => {
               selectedSeats={selectedSeats}
               selectedCombos={selectedCombos}
               selectedCinema={selectedCinema}
-              selectedMovie={movieDetails?.name}
+              selectedMovie={movieDetails?.name || movieDetails?.title}
               selectedTime={selectedTime}
               selectedDate={selectedDate}
             />

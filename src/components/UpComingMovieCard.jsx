@@ -17,7 +17,7 @@ const UpComingMovieCard = ({ movie }) => {
 
   return (
     <div
-      className="bg-transparent border border-gray-500 text-white rounded-lg w-64 shadow-lg"
+      className="w-full max-w-64 rounded-lg border border-gray-500 bg-transparent text-white shadow-lg"
       style={{ cursor: "pointer" }}
     >
       <div className="relative">

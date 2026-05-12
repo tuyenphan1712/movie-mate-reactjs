@@ -13,24 +13,24 @@ import images from "../asset";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#27282D] text-gray-400 py-10 border-t border-white border-opacity-20">
-      <div className="max-w-7xl mx-auto px-8">
+    <footer className="border-t border-white border-opacity-20 bg-[#27282D] py-8 text-gray-400 md:py-10">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Logo and Main Links */}
-        <div className="flex justify-center mb-10">
+        <div className="mb-8 flex justify-center md:mb-10">
           <Link to={ROUTING_HOME}>
             <div className="flex items-center">
               <img
                 src={images.logo}
                 alt="MovieMate Logo"
-                className="w-50 h-25"
+                className="h-auto w-36 md:w-50"
               />
             </div>
           </Link>
         </div>
 
         {/* Footer Links */}
-        <div className="flex justify-center mb-6">
-          <div className="grid grid-cols-4 text-left">
+        <div className="mb-6 flex justify-center">
+          <div className="grid w-full grid-cols-2 gap-6 text-left md:w-auto md:grid-cols-4 md:gap-0">
             <div className="max-w-xs w-32">
               <h3 className="text-gray-300 font-semibold mb-2 ">MOVIEMATE</h3>
               <ul className="space-y-1 ">
@@ -134,8 +134,8 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-10 border-t border-gray-700 pt-4 flex items-center justify-between text-gray-500 text-sm">
-          <div className="flex space-x-6 mx-auto">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-700 pt-4 text-sm text-gray-500 md:flex-row">
+          <div className="mx-auto flex flex-wrap justify-center gap-x-6 gap-y-2 md:flex-nowrap md:space-x-6 md:gap-0">
             <p>&copy; 2024 Brand, Inc.</p>
             <Link to="" className="hover:text-yellow-500">
               Chính sách bảo mật

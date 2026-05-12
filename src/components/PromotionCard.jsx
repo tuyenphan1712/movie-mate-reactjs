@@ -2,11 +2,11 @@ import React from "react";
 
 const PromotionCard = ({ promotion }) => {
   return (
-    <div className="flex-shrink-0 w-full px-4 h-full">
+    <div className="h-full w-full flex-shrink-0 px-0 md:px-4">
       <img
         src={promotion.image}
         alt={promotion.title}
-        className="w-full h-full object-cover rounded-lg"
+        className="h-auto w-full rounded-lg object-cover md:h-full"
       />
     </div>
   );

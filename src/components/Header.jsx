@@ -47,16 +47,16 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#27282D] text-white py-4 px-8 flex items-center justify-between border-b border-white border-opacity-20">
+    <header className="flex flex-col gap-4 border-b border-white border-opacity-20 bg-[#27282D] px-4 py-4 text-white md:flex-row md:items-center md:justify-between md:px-8">
       {/* Logo */}
       <Link to={ROUTING_HOME}>
-        <div className="flex items-center ml-8">
-          <img src={images.logo} alt="MovieMate Logo" className="w-50 h-25" />
+        <div className="flex items-center justify-center md:ml-8 md:justify-start">
+          <img src={images.logo} alt="MovieMate Logo" className="h-auto w-36 md:w-50" />
         </div>
       </Link>
 
       {/* Navigation Links */}
-      <nav className="flex space-x-10 relative">
+      <nav className="relative flex flex-wrap items-center justify-center gap-x-5 gap-y-2 md:space-x-10 md:gap-0">
         {/* Trang chủ */}
         <div className="relative group">
           <Link to={ROUTING_HOME} className="hover:text-yellow-500 text-lg">
@@ -127,13 +127,13 @@ const Header = () => {
       </nav>
 
       {/* Search and Login */}
-      <div className="flex items-center space-x-5 me-10">
+      <div className="flex w-full flex-col items-stretch gap-3 md:me-10 md:w-auto md:flex-row md:items-center md:space-x-5 md:gap-0">
         {/* Search Bar */}
-        <div className="relative">
+        <div className="relative w-full md:w-auto">
           <input
             type="text"
             placeholder="Tìm phim"
-            className="bg-white text-gray-300 px-4 py-2 rounded-full pl-10 focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full rounded-full bg-white px-4 py-2 pl-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-black md:w-auto"
           />
           {/* Search Icon */}
           <i className="fa-solid fa-magnifying-glass text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 text-lg"></i>
@@ -144,7 +144,7 @@ const Header = () => {
           <div className="relative group">
             <Link
               to="#"
-              className="flex items-center space-x-1 hover:text-yellow-500"
+          className="flex items-center justify-center space-x-1 hover:text-yellow-500 md:justify-start"
               onMouseEnter={() => setIconHovered(true)} // Khi hover vào icon, thay đổi state
               onMouseLeave={() => setIconHovered(false)} // Khi rời khỏi icon, quay lại màu mặc định
             >
@@ -173,7 +173,7 @@ const Header = () => {
         ) : (
           <Link
             to={ROUTING_LOGIN}
-            className="flex items-center space-x-1 hover:text-yellow-500"
+            className="flex items-center justify-center space-x-1 hover:text-yellow-500 md:justify-start"
           >
             <img
               src={iconHovered ? images.userYellowIcon : images.userWhiteIcon}

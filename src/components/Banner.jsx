@@ -3,108 +3,89 @@ import { useMovies } from "../context/MovieContext";
 import images from "../asset";
 
 const Banner = () => {
-
-  const {movies} = useMovies();
+  const { movies } = useMovies();
   const banner = movies.banners || [];
-
   const [selectedMovie, setSelectedMovie] = useState(banner[0]);
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        stars.push(
-          <span key={i} className="text-yellow-400">
-            ★
-          </span>
-        );
-      } else {
-        stars.push(
-          <span key={i} className="text-gray-300">
-            ★
-          </span>
-        );
-      }
-    }
-    return stars;
-  };
+  if (!selectedMovie) {
+    return null;
+  }
+
+  const renderStars = (rating) =>
+    Array.from({ length: 5 }, (_, index) => (
+      <span
+        key={index}
+        className={index < rating ? "text-yellow-400" : "text-gray-300"}
+      >
+        ★
+      </span>
+    ));
 
   return (
     <div
-      className="relative w-full h-[600px] bg-cover bg-center rounded-lg border border-white"
+      className="relative w-full min-h-[640px] overflow-hidden rounded-lg border border-white bg-cover bg-center md:h-[600px] md:min-h-0"
       style={{ backgroundImage: `url(${selectedMovie.backgroundImage})` }}
     >
-      {/* Phần bên trái: Chi tiết phim */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-start justify-start pl-12 pr-8 py-10 rounded-lg ">
-        <div className="text-white max-w-md space-y-4 text-left">
-          {/* Xếp hạng sao */}
-          <div className="flex items-center space-x-1 text-yellow-400 text-2xl mb-4">
+      <div className="absolute inset-0 rounded-lg bg-black bg-opacity-60 px-4 py-6 md:px-12 md:py-10">
+        <div className="max-w-full space-y-3 text-left text-white md:max-w-md md:space-y-4">
+          <div className="mb-2 flex items-center space-x-1 text-xl text-yellow-400 md:mb-4 md:text-2xl">
             {renderStars(selectedMovie.rating)}
           </div>
 
-          {/* Tiêu đề phim */}
-          <h1 className="text-5xl font-bold leading-tight">
+          <h1 className="text-3xl font-bold leading-tight md:text-5xl">
             {selectedMovie.title}
           </h1>
 
-          {/* Ngày phát hành */}
-          <p className="text-yellow-400 text-lg font-medium mt-4">
+          <p className="mt-3 text-sm font-medium text-yellow-400 md:mt-4 md:text-lg">
             Phát hành vào ngày {selectedMovie.releaseDate}
           </p>
 
-          {/* Mô tả chính */}
-          <p className="text-gray-300 text-base leading-relaxed mt-4">
+          <p className="mt-3 line-clamp-[8] text-sm leading-relaxed text-gray-300 md:mt-4 md:line-clamp-none md:text-base">
             {selectedMovie.description}
           </p>
 
-          {/* Các nút hành động */}
-          <div className="flex space-x-4 mt-6 pt-20">
-            {/* Button Đặt vé */}
-            <button className="bg-yellow-400 text-black font-bold py-2 px-4 rounded-lg mb-2 flex items-center justify-center text-lg w-40 h-12">
-              <img src={images.bookingIcon} alt="Booking" className="w-6 h-6" />
-              <p className="ps-2">Đặt vé</p>
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:gap-4 md:mt-6 md:pt-20">
+            <button className="flex h-12 w-full items-center justify-center rounded-lg bg-yellow-400 px-4 py-2 text-base font-bold text-black sm:w-40 md:text-lg">
+              <img src={images.bookingIcon} alt="Booking" className="h-6 w-6" />
+              <span className="ps-2">Đặt vé</span>
             </button>
 
-            {/* Button Xem Trailer */}
-            <button className="bg-transparent border border-white text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center text-sm w-40 h-12">
-              <img src={images.trailerIcon} alt="Trailer" className="w-6 h-6" />
-              <p className="ps-2">Xem Trailer</p>
+            <button className="flex h-12 w-full items-center justify-center rounded-lg border border-white bg-transparent px-4 py-2 text-sm font-bold text-white sm:w-40">
+              <img src={images.trailerIcon} alt="Trailer" className="h-6 w-6" />
+              <span className="ps-2">Xem Trailer</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Phần bên phải: Thumbnail cuộn dọc */}
-      <div className="absolute right-10 top-10 h-[500px] overflow-y-auto space-y-4 custom-scrollbar pr-4">
+      <div className="custom-scrollbar absolute bottom-4 left-4 right-4 flex gap-3 overflow-x-auto pb-1 md:bottom-auto md:left-auto md:right-10 md:top-10 md:block md:h-[500px] md:space-y-4 md:overflow-x-hidden md:overflow-y-auto md:pr-4">
         {banner.map((movie) => (
-          <div
+          <button
             key={movie.id}
-            className="relative cursor-pointer rounded-md overflow-hidden"
+            type="button"
+            className="relative flex-shrink-0 cursor-pointer overflow-hidden rounded-md"
             onClick={() => setSelectedMovie(movie)}
           >
-            {/* Hình ảnh của phim */}
             <img
               src={movie.thumbnail}
               alt={movie.title}
-              className={`w-[230px] h-[150px] object-cover transition-transform bg-cover ${
+              className={`h-[82px] w-[130px] object-cover transition-transform md:h-[150px] md:w-[230px] ${
                 selectedMovie.id === movie.id ? "scale-105" : ""
               }`}
             />
 
-            {/* Lớp phủ mờ khi được chọn hoặc hover */}
-            <div
-              className={`absolute inset-0 bg-black bg-opacity-40 ${
+            <span
+              className={`absolute inset-0 bg-black bg-opacity-40 transition-opacity ${
                 selectedMovie.id === movie.id
                   ? "opacity-100"
                   : "opacity-0 hover:opacity-80"
-              } transition-opacity`}
-            ></div>
+              }`}
+            />
 
-            {/* Viền màu vàng khi được chọn */}
             {selectedMovie.id === movie.id && (
-              <div className="absolute inset-0 border-2 border-yellow-500 rounded-md"></div>
+              <span className="absolute inset-0 rounded-md border-2 border-yellow-500" />
             )}
-          </div>
+          </button>
         ))}
       </div>
     </div>

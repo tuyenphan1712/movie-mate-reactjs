@@ -1,99 +1,70 @@
-import {axiosinstance} from "../../axios/config";
+const users = [
+  {
+    id: 1,
+    name: "MovieMate User",
+    email: "user@moviemate.local",
+    phone: "0900000001",
+    birthday: "2000-01-01",
+    gender: "Nam",
+    user_role: "user",
+    user_status: "active",
+    password: "123456",
+  },
+  {
+    id: 2,
+    name: "MovieMate Admin",
+    email: "admin@moviemate.local",
+    phone: "0900000002",
+    birthday: "1998-01-01",
+    gender: "Nu",
+    user_role: "admin",
+    user_status: "active",
+    password: "admin",
+  },
+];
 
-export const getUser= async () => {
-    try {
-
-        const res = await axiosinstance.get('/users');
-
-        // console.log("Cuc getUser: ", res.data);
-
-        return res.data;
-    } catch(err) {
-        console.log('errr', err)
-        throw err;
-    }
-}
+export const getUser = async () => {
+  return { data: users };
+};
 
 export const getUserById = async (id) => {
-    try {
-        const res = await axiosinstance.get(`/users/${id}`);
-        console.log("API response:", res.data);
-        return res.data;
-    } catch(err) {
-        console.log('errr', err);
-        throw err;
-    }
-}
+  return users.find((user) => String(user.id) === String(id)) || users[0];
+};
 
 export const getUserByNameOrEmail = async (textkey) => {
-    try {
-        const res = await axiosinstance.get(`/users/search/${textkey}`);
-        console.log("API response:", res.data);
-        return res.data;
-    } catch(err) {
-        console.log('errr', err);
-        throw err;
-    }
-}
+  const keyword = String(textkey || "").toLowerCase();
+  return users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(keyword) ||
+      user.email.toLowerCase().includes(keyword)
+  );
+};
 
-export const createUser = async ({ name, email, phone, birthday, gender, password }) => {
-    try {
-        const newData = await axiosinstance.post('/users', {
-            name,
-            email,
-            phone,
-            birthday,
-            gender,
-            password
-        })
-        console.log('data: ',newData);
-        return newData.data;
-    } catch(err) {
-        console.log('errr', err);
-        throw err;
-    }
-}
+export const createUser = async (user) => {
+  return {
+    id: `local-${Date.now()}`,
+    user_role: "user",
+    user_status: "active",
+    ...user,
+  };
+};
 
-export const loginUser = async ({ email_or_phone, password }) => {
-    try {
-        const newData = await axiosinstance.post('/users/login', {
+export const loginUser = async ({ email_or_phone }) => {
+  const credential = String(email_or_phone || "").toLowerCase();
+  const user =
+    users.find(
+      (item) =>
+        item.email.toLowerCase() === credential ||
+        String(item.phone) === credential
+    ) || users[0];
 
-            email_or_phone,
-                password
+  return { data: user };
+};
 
-        })
-        console.log('data: ',newData);
-        return newData.data;
-    } catch(err) {
-        console.log('errr', err);
-        throw err;
-    }
-}
-
-export const updateUser = async ({id, name, description, price}) => {
-    console.log('body', id, name, price);
-    try {
-        const newData = await axiosinstance.put('/users', {
-            id,
-            name,
-            description,
-            price
-        })
-
-        return newData.data;
-    } catch(err) {
-        console.log('errr', err);
-        throw err;
-    }
-}
+export const updateUser = async (user) => {
+  return user;
+};
 
 export const deleteUser = async (id) => {
-    try{
-        const res = await axiosinstance.delete(`/users/${id}`);
-        console.log("API response:", res.data);
-        // return res.data;
-    } catch (e) {
-        console.log('errr', e);
-        throw e;
-    }
-}
+  return { id };
+};

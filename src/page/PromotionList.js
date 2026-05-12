@@ -40,10 +40,10 @@ const PromotionList = () => {
                                         {promotion.title}
                                     </h2>
                                     <p className="text-lg mb-6 text-left">{promotion.description}</p>
-                                    <p className="text-lg text-left">
+                                    <div className="text-lg text-left">
                                         <p className="font-bold">Thời gian áp dụng:</p>
                                         <p>{promotion.date}</p>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

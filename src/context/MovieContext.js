@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
-import moviesData from "../data/MovieData";
+import { getLocalMoviesData } from "../data/movieStore";
 
 // Tạo Context
 const MovieContext = createContext();
 
 // Provider để chia sẻ dữ liệu phim trong toàn ứng dụng
 export const MovieProvider = ({ children }) => {
-  const [movies] = useState(moviesData);
+  const [movies] = useState(getLocalMoviesData());
 
   return (
     <MovieContext.Provider value={{ movies}}>
